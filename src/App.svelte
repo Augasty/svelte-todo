@@ -1,5 +1,6 @@
 <script>
   import { afterUpdate } from "svelte";
+  import TodoItem from "./TodoItem.svelte";
 
   let todoItems = [];
 
@@ -67,19 +68,8 @@
     <h1 class="app-title">todos</h1>
     <ul class="todo-list">
       {#each todoItems as todo (todo.id)}
-        <li class="todo-item {todo.checked ? 'done' : ''}">
-          <input id={todo.id} type="checkbox" />
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <label
-            for={todo.id}
-            class="tick"
-            on:click={() => toggleDone(todo.id)}
-          />
-          <span>{todo.text}</span>
-          <button class="delete-todo" on:click={() => deleteTodo(todo.id)}>
-            <svg><use href="#delete-icon" /></svg>
-          </button>
-        </li>
+        <TodoItem {...todo} toggleDone={toggleDone} deleteTodo={deleteTodo}/>
+
       {/each}
     </ul>
     <div class="empty-state">
